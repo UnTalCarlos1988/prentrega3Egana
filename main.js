@@ -3,17 +3,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const listaTareas = document.getElementById("listaTareas");
     const totalTareas = document.getElementById("totalTareas");
 
-    const tareas = [];
+    // Obtener las tareas del localStorage al cargar la página
+    const tareas = JSON.parse(localStorage.getItem("tareas")) || [];
+
+    // Actualizo la lista de tareas al cargar la página
+    actualizarListaTareas();
 
     tareaForm.addEventListener("submit", function (event) {
         event.preventDefault();
 
-        // Obtener los valores del formulario
+        // Obtengo los valores del formulario
         const titulo = document.getElementById("titulo").value;
         const descripcion = document.getElementById("descripcion").value;
         const hora = document.getElementById("hora").value;
 
-        // Crear un objeto de tarea
+        // Creando un objeto de tarea
         const tarea = {
             titulo: titulo,
             descripcion: descripcion,
@@ -23,10 +27,13 @@ document.addEventListener("DOMContentLoaded", function () {
         // Agregar la tarea al array
         tareas.push(tarea);
 
-        // Limpiar el formulario
+        // Guardando las tareas en el localStorage
+        localStorage.setItem("tareas", JSON.stringify(tareas));
+
+        // Limpio el formulario
         tareaForm.reset();
 
-        // Actualizar la lista de tareas y la cantidad total
+        // Actualizo la lista de tareas y la cantidad total
         actualizarListaTareas();
     });
 
@@ -46,6 +53,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Eliminar la tarea completada del array
                 tareas.splice(indice, 1);
 
+                // Actualizar el localStorage sin la tarea completada
+                localStorage.setItem("tareas", JSON.stringify(tareas));
+
                 // Actualizar la lista de tareas y la cantidad total
                 actualizarListaTareas();
 
@@ -57,10 +67,10 @@ document.addEventListener("DOMContentLoaded", function () {
             listaTareas.appendChild(tareaItem);
         });
 
-        // Actualizar la cantidad total de tareas
+        
         totalTareas.textContent = tareas.length;
 
-        // Mostrar un mensaje de "No hay tareas pendientes" si no hay tareas
+        
         if (tareas.length === 0) {
             alert("No hay tareas pendientes");
         }
