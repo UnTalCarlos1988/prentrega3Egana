@@ -2,8 +2,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const tareaForm = document.getElementById("tareaForm");
     const listaTareas = document.getElementById("listaTareas");
     const totalTareas = document.getElementById("totalTareas");
+    let mensajeH2 = document.getElementById("mensaje");
 
-    // Obtener las tareas del localStorage al cargar la página
+        // Obtener las tareas del localStorage al cargar la página
     const tareas = JSON.parse(localStorage.getItem("tareas")) || [];
 
     // Actualizo la lista de tareas al cargar la página
@@ -59,8 +60,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Actualizar la lista de tareas y la cantidad total
                 actualizarListaTareas();
 
-                // Mostrar un alert de tarea completada
-                alert("Tarea completada");
+                // Mostrar msje de tarea completada
+                const mensaje = "tarea completada"
+                mensajeH2.textContent= mensaje
             });
 
             tareaItem.appendChild(botonCompletar);
@@ -70,9 +72,13 @@ document.addEventListener("DOMContentLoaded", function () {
         
         totalTareas.textContent = tareas.length;
 
-        
+        //mostrar msje de "no hay tareas pendientes"
         if (tareas.length === 0) {
-            alert("No hay tareas pendientes");
+            const mensaje = "no hay tareas pendientes!"
+                mensajeH2.textContent= mensaje
+        }else{
+            //si hay tareas el msje anterior no se muestra
+            mensajeH2.textContent = ""
         }
     }
 });
